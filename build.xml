@@ -1,41 +1,40 @@
 <?xml version="1.0"?>
 <project name="flume-kestrel" default="jar">
-  <property name="javac.debug" value="on"/>
-  <property name="flume.base" value="/usr/lib/flume"/>
- 
-  <path id="classpath">
-    <!-- in case we are running in dev env -->
-    <pathelement location="${flume.base}/build/classes"/>
-    <fileset dir="${flume.base}/lib">
-      <include name="**/google-collect*.jar" />
-      <include name="**/guava*.jar" />
-      <include name="**/log4j-*.jar" />
-       <include name="**/slf4j-*.jar" />
- 
-    </fileset>
-    <!-- in case we are running in release env -->
-    <fileset dir="${flume.base}/lib">
-      <include name="flume-*.jar" />
-      <include name="xmemcached/*.jar" />
-    </fileset>
-    <pathelement location="${flume.base}/lib/"/>
-  </path>
- 
-  <target name="jar">
-    <mkdir dir="build"/>
-    <mkdir dir="build/classes"/>
- 
-    <javac srcdir="./src/com/blangdon/flume/kestrel" destdir="build/classes" debug="${javac.debug}">
-      <classpath refid="classpath"/>
-    </javac>
- 
-    <jar jarfile="flume-kestrel.jar" basedir="build/classes"/>
-  </target>
- 
-  <target name="clean">
-    <echo message="Cleaning generated files and stuff"/>
-    <delete dir="build" />
-    <delete file="flume-kestrel.jar" />
-  </target>
- 
+
+    <property name="javac.debug" value="on"/>
+    <property name="flume.base" value="apache-flume-1.4.0-bin/"/>
+
+    <path id="classpath">
+        <!-- in case we are running in dev env -->
+        <pathelement location="${flume.base}/build/classes"/>
+        <fileset dir="${flume.base}/lib">
+            <include name="**/google-collect*.jar"/>
+            <include name="**/guava*.jar"/>
+            <include name="**/log4j-*.jar"/>
+            <include name="**/slf4j-*.jar"/>
+            <include name="flume-*.jar"/>
+        </fileset>
+        <!-- in case we are running in release env -->
+        <fileset dir="lib">
+            <include name="xmemcached*.jar"/>
+        </fileset>
+        <pathelement location="${flume.base}/lib"/>
+        <pathelement location="lib"/>
+    </path>
+
+    <target name="jar">
+        <mkdir dir="build"/>
+        <mkdir dir="build/classes"/>
+        <javac source="1.6" target="1.6" srcdir="./src/com/blangdon/flume/kestrel" destdir="build/classes" debug="${javac.debug}">
+            <classpath refid="classpath"/>
+        </javac>
+        <jar jarfile="flume-kestrel.jar" basedir="build/classes"/>
+    </target>
+
+    <target name="clean">
+        <echo message="Cleaning generated files and stuff"/>
+        <delete dir="build"/>
+        <delete file="flume-kestrel.jar"/>
+    </target>
+
 </project>
